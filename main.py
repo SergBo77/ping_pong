@@ -1,25 +1,28 @@
+# Импортируем библиотеку pygame и модуль random.
 import pygame
 import random
 
 # Инициализация библиотеки pygame
 pygame.init()
 
-# Цвета
+# Выбираем Цвета
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-# Размер окна
+# Устанавливаем размер окна
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 
-# Размер ракетки
+# Задаем размер ракетки
 PADDLE_WIDTH = 10
 PADDLE_HEIGHT = 100
 
-# Размер мяча
+# Задаем размер мяча
 BALL_SIZE = 10
 
+#Определяем класс Paddle для ракетки игрока и компьютера.
 class Paddle:
+    #Определяем методы класса Paddle: init для инициализации и draw для отрисовки ракетки.
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -27,10 +30,13 @@ class Paddle:
     def draw(self, screen):
         pygame.draw.rect(screen, WHITE, (self.x, self.y, PADDLE_WIDTH, PADDLE_HEIGHT))
 
+     #Определяем метод move для изменения положения ракетки.
     def move(self, dy):
         self.y += dy
 
+#Определяем класс Ball для мяча.
 class Ball:
+    #Определяем методы класса Ball: init для инициализации и draw для отрисовки мяча.
     def __init__(self, x, y, dx, dy):
         self.x = x
         self.y = y
@@ -40,11 +46,14 @@ class Ball:
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, (self.x, self.y), BALL_SIZE)
 
+    #Определяем метод move для изменения положения мяча.
     def move(self):
         self.x += self.dx
         self.y += self.dy
 
+#Определяем класс PongGame для игры "Понг".
 class PongGame:
+    #Определяем методы класса PongGame: init для инициализации игры и run для запуска игры.
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.clock = pygame.time.Clock()
@@ -54,6 +63,9 @@ class PongGame:
         self.ball = Ball(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, random.choice([-1, 1]), random.choice([-1, 1]))
 
     def run(self):
+        #В методе run осуществляем основной игровой цикл:
+        #обработка событий, движение ракеток и мяча, проверка столкновений,
+        #отрисовка объектов и обновление экрана.
         while not self.game_over:
             self.screen.fill(BLACK)
 
@@ -96,6 +108,8 @@ class PongGame:
             pygame.display.flip()
             self.clock.tick(60)
 
+#Создаем объект игры и запускаем игру при условии,
+#что скрипт выполняется как основной (main) файл.
 if __name__ == '__main__':
     game = PongGame()
     game.run()
