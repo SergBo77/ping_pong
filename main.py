@@ -25,14 +25,15 @@ class Paddle:
     #Определяем методы класса Paddle: init для инициализации и draw для отрисовки ракетки.
     def __init__(self, x, y):
         self.x = x
-        self.y = y
+        self.y = WINDOW_HEIGHT // 2 - PADDLE_HEIGHT // 2
 
     def draw(self, screen):
         pygame.draw.rect(screen, WHITE, (self.x, self.y, PADDLE_WIDTH, PADDLE_HEIGHT))
 
      #Определяем метод move для изменения положения ракетки.
     def move(self, dy):
-        self.y += dy
+        if 0 < self.y + dy < WINDOW_HEIGHT - PADDLE_HEIGHT:
+            self.y += dy
 
 #Определяем класс Ball для мяча.
 class Ball:
@@ -40,8 +41,8 @@ class Ball:
     def __init__(self, x, y, dx, dy):
         self.x = x
         self.y = y
-        self.dx = dx
-        self.dy = dy
+        self.dx = dx*3
+        self.dy = dy*3
 
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, (self.x, self.y), BALL_SIZE)
@@ -50,6 +51,7 @@ class Ball:
     def move(self):
         self.x += self.dx
         self.y += self.dy
+
 
 #Определяем класс PongGame для игры "Понг".
 class PongGame:
